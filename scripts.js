@@ -1,34 +1,26 @@
-// Get the modal
-var modal = document.getElementById("movie-modal");
 
-// Get the <span> element that closes the modal
-var closeButton = document.getElementsByClassName("close-button")[0];
+const tabItems = document.querySelectorAll(".tab-item");
+const tabContentItems = document.querySelectorAll(".tab-content-item");
 
-// Get all movie thumbnails
-var movieThumbnails = document.getElementsByClassName("movie-thumbnail");
-
-// Function to open the modal
-function openModal(event) {
-    modal.style.display = "block";
-    var movieTitle = event.target.alt;
-    modal.getElementsByTagName("h2")[0].textContent = movieTitle;
-    modal.getElementsByTagName("p")[0].textContent = "Details about " + movieTitle;
+// Select tab content
+function selectItem(e) {
+  removeBorder();
+  removeShow();
+  // Add border to current tab
+  this.classList.add("tab-border");
+  // Grab content item from DOM
+  const tabContentItem = document.querySelector(`#${this.id}-content`);
+  // Add show class
+  tabContentItem.classList.add("show");
 }
 
-// Attach click event to each movie thumbnail
-for (var i = 0; i < movieThumbnails.length; i++) {
-    movieThumbnails[i].onclick = openModal;
+function removeBorder() {
+  tabItems.forEach(item => item.classList.remove("tab-border"));
 }
 
-// Function to close the modal
-closeButton.onclick = function() {
-    modal.style.display = "none";
+function removeShow() {
+  tabContentItems.forEach(item => item.classList.remove("show"));
 }
 
-// Close the modal when clicking outside of the modal content
-window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
-}
-
+// Listen for tab click
+tabItems.forEach(item => item.addEventListener("click", selectItem));
